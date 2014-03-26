@@ -16,6 +16,7 @@ El ejercicio constará de dos partes:
 
 ### ¿Por qué este tipo de implementaciones es una mala práctica?
 
+Este tipo de implementaciones están consideradas una mala práctica porque nos permiten modificar objetos que usaremos nosotros, y tambien objetos que pueden ser usados por otros scripts, asi como redefinir métodos preexistentes en el core de Javascript. Para estos propósitos, es mucho mejor extender una clase, y añadirle funcionalidad, que hacerlo directamente sobre la clase original, dado que cualquier script que haga uso de la clase modificada, podría dejar de funcionar, bien porque hayamos sobreescrito métodos nativos de la clase, o bien porque varios scripts intenten implementar la misma función usando protoype.
 
 ### ¿Cómo?
 
