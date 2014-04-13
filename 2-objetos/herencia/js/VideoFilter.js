@@ -59,7 +59,22 @@ VideoFilter.prototype.videoCrop = function(cw, ch) {
 	return { vx: vx, vy: vy, vw: vw, vh: vh};
 };
 
-VideoFilter.prototype.applyFilter = function(context) { };
+VideoFilter.prototype.applyFilter = function(context) { 
+	
+	var cw = this.canvas.width();
+	var ch = this.canvas.height();
+
+	var imgd = context.getImageData(0, 0, cw, ch);
+
+	var pix = imgd.data;
+	for (var i = 0, n = pix.length; i < n; i += 4) {
+		var grayscale = pix[i  ] * .3 + pix[i+1] * .59 + pix[i+2] * .11;
+		pix[i  ] = grayscale;   // red
+		pix[i+1] = grayscale;   // green
+		pix[i+2] = grayscale;   // blue
+	}
+	context.putImageData(imgd, 0, 0);
+};
 
 VideoFilter.prototype.supportedVideoFormat = function() {
 	if(this.canPlayType('video/webm')) return 'webm';
