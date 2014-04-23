@@ -1,0 +1,29 @@
+html, body {
+	position: relative;
+	width:        100%;
+	height:       100%;
+	margin:          0;
+	padding:         0;
+	overflow:   hidden;
+}
+
+.objeto {
+	position: absolute;
+	top:         100px;
+	left:        100px;
+
+	width:       104px;
+	height:       80px;
+
+	background-image: url(../img/sprite.png);
+
+	-webkit-animation: pez-aleteo 1.3s steps(33) infinite;
+	-moz-animation: pez-aleteo 1.3s steps(33) infinite;
+	-o-animation: pez-aleteo 1.3s steps(33) infinite;
+	animation: pez-aleteo 1.3s steps(33) infinite;
+}
+
+@-webkit-keyframes pez-aleteo { 0% { background-position: 0px 0px; } 100% { background-position: -3300px 0px; } }
+@-moz-keyframes pez-aleteo { 0% { background-position: 0px 0px; } 100% { background-position: -3300px 0px; } }
+@-o-keyframes pez-aleteo { 0% { background-position: 0px 0px; } 100% { background-position: -3300px 0px; } }
+@keyframes pez-aleteo { 0% { background-position: 0px 0px; } 100% { background-position: -3300px 0px; } }
