@@ -8,6 +8,7 @@
 		var obj = objeto;
 
 		obj.style.position = "absolute";
+		obj.style.cursor = "move";
 
 		var dragObject  = null;
 		var mouseOffset = {x: 0, y: 0};
