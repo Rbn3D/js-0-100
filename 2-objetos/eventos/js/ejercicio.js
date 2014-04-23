@@ -1,3 +1,68 @@
 (function() {
 
+	var ultimoClick = false;
+	var obj = document.querySelectorAll(".objeto")[0];
+
+	var dragObject  = null;
+	var mouseOffset = {x: 0, y: 0};
+
+	document.onmousemove = mouseMove;
+	document.onmousemove = mouseMove;
+	document.onmouseup	 = mouseUp;
+
+	function mouseCoords(ev){
+		if(ev.pageX || ev.pageY){
+			return {x:ev.pageX, y:ev.pageY};
+		}
+		return {
+			x:ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+			y:ev.clientY + document.body.scrollTop  - document.body.clientTop
+		};
+	}
+
+	document.onclick = handleClick;
+
+	function handleClick()
+	{
+		if(ultimoClick == true) {
+			dragObject = obj;
+		}
+		else {
+			ultimoClick = true;
+			setTimeout(function() { ultimoClick = false; }, 1000)
+		}
+
+	}
+
+	function getMouseOffset(target, ev){
+		ev = ev || window.event;
+		var docPos    = getPosition(target);
+		var mousePos  = mouseCoords(ev);
+		return {x:mousePos.x - docPos.x, y:mousePos.y - docPos.y};
+	}
+	function getPosition(e){
+		var left = 0;
+		var top  = 0;
+		while (e.offsetParent){
+			left += e.offsetLeft;
+			top  += e.offsetTop;
+			e     = e.offsetParent;
+		}
+		left += e.offsetLeft;
+		top  += e.offsetTop;
+		return {x:left, y:top};
+	}
+	function mouseMove(ev){
+		ev           = ev || window.event;
+		var mousePos = mouseCoords(ev);
+		if(dragObject){
+			dragObject.style.top      = (mousePos.y - mouseOffset.y) + "px";
+			dragObject.style.left     = (mousePos.x - mouseOffset.x) + "px";
+			return false;
+		}
+	}
+	function mouseUp(){
+		dragObject = null;
+	}
+
 })();
