@@ -1,5 +1,5 @@
-var BWFilter = function() {
-
+var BWFilter = function(selector) {
+	VideoFilter.call(this, selector);
 };
 
 BWFilter.prototype = new VideoFilter();
