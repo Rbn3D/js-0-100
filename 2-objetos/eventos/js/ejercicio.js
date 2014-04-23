@@ -1,8 +1,7 @@
 (function() {
 
 
-	function drag(objeto, timeout)
-	{
+	function drag(objeto, timeout) {
 
 		var ultimoClick = false;
 		var obj = objeto;
@@ -15,10 +14,24 @@
 
 		document.onmousemove = mouseMove;
 		document.onmousemove = mouseMove;
+		document.onmousedown = handleDown;
 		document.onmouseup	 = null;
 
-		function mouseCoords(ev){
-			if(ev.pageX || ev.pageY){
+		function handleDown(ev) {
+			if(ultimoClick == true) {
+				mouseOffset = getMouseOffset(obj, ev); 
+				dragObject = obj;
+				document.onmouseup = mouseUp;
+			}
+			else {
+				ultimoClick = true;
+				document.onmouseup = null;
+				setTimeout(function() { ultimoClick = false; }, timeout);
+			}
+		}
+
+		function mouseCoords(ev) {
+			if(ev.pageX || ev.pageY) {
 				return {x:ev.pageX, y:ev.pageY};
 			}
 			return {
@@ -27,34 +40,17 @@
 			};
 		}
 
-		document.onmousedown = handleDown;
-
-
-		function handleDown(ev)
-		{
-			if(ultimoClick == true) {
-				mouseOffset = getMouseOffset(obj, ev); 
-				dragObject = obj;
-				document.onmouseup = mouseUp;
-			}
-			else {
-				ultimoClick = true;
-				document.onmouseup	 = null;
-				setTimeout(function() { ultimoClick = false; }, timeout);
-			}
-
-		}
-
-		function getMouseOffset(target, ev){
+		function getMouseOffset(target, ev) {
 			ev = ev || window.event;
 			var docPos    = getPosition(target);
 			var mousePos  = mouseCoords(ev);
 			return {x:mousePos.x - docPos.x, y:mousePos.y - docPos.y};
 		}
-		function getPosition(e){
+
+		function getPosition(e) {
 			var left = 0;
 			var top  = 0;
-			while (e.offsetParent){
+			while (e.offsetParent) {
 				left += e.offsetLeft;
 				top  += e.offsetTop;
 				e     = e.offsetParent;
@@ -63,7 +59,8 @@
 			top  += e.offsetTop;
 			return {x:left, y:top};
 		}
-		function mouseMove(ev){
+
+		function mouseMove(ev) {
 			ev           = ev || window.event;
 			var mousePos = mouseCoords(ev);
 			if(dragObject){
@@ -72,7 +69,7 @@
 				return false;
 			}
 		}
-		function mouseUp(){
+		function mouseUp() {
 			dragObject = null;
 		}
 	}
